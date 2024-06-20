@@ -1,0 +1,14 @@
+
+
+##### bonjour 
+GET http://localhost:8000/applications
+Content-Type: application/json
+
+### 
+POST http://localhost:8000/applications
+Content-Type: application/json
+
+{
+    "name": "tockem App",
+    "secret_key":"lui"
+}

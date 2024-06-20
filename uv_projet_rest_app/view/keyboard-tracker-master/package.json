@@ -1,0 +1,33 @@
+{
+  "name": "keyboard-tracker",
+  "version": "2.3.0",
+  "description": "Zero config keyboard tracker for JS.",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgmcelwain/keyboard-tracker.git"
+  },
+  "keywords": [
+    "keyboard"
+  ],
+  "author": "Jamie McElwain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jgmcelwain/keyboard-tracker/issues"
+  },
+  "homepage": "https://github.com/jgmcelwain/keyboard-tracker#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^4.18.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0"
+  },
+  "unpkg": "dist/keyboard-tracker.min.js"
+}
