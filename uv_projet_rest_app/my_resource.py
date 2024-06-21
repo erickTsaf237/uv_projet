@@ -62,8 +62,10 @@ class ApplicationResource(Resource):
         return {'salutation': "bonjour"}
     
 
-
-
+import numpy as np;
+import matplotlib.pyplot as plt
+#plt.imshow(np.random.randint(0, 255, 7*10).reshape(7, 10))
+#plt.show()
 
 class ParticipantResource(Resource):
     def post(self):
@@ -74,7 +76,9 @@ class ParticipantResource(Resource):
         data = key['data']
         usrname = key['userName']
         participants = []
-
+        
+        boo = np.array(data)[:, 2:].astype(float).dot(0.001*255)
+        print(boo)
         for participant_data in data:
             participant = ParticipantKey(
                 session='1',

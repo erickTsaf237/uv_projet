@@ -1,0 +1,29 @@
+# Environnement virtuel
+venv/
+
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers de configuration
+*.env
+*.ini
+
+# Fichiers journaux
+*.log
+*.log.*
+
+# Fichiers de sauvegarde
+*.bak
+*.swp
+
+# Fichiers IDE
+.idea/
+.vscode/
+
+# Fichiers macOS
+.DS_Store
+
+# Fichiers CSV
+*.csv
