@@ -10,6 +10,8 @@ from flask_restful import Resource, reqparse
 from my_model import db, Application, ParticipantKey
 from flask import request
 from flask_restful import Resource
+from sklearn.preprocessing import LabelEncoder
+from my_isolation_forest import test_user
 
 class ApplicationResource(Resource):
     def __init__(self):
@@ -75,10 +77,13 @@ class ParticipantResource(Resource):
         #print(key)
         data = key['data']
         usrname = key['userName']
-        participants = []
+        sendedKeys = []
         
-        boo = np.array(data)[:, 2:].astype(float).dot(0.001*255)
+        boo = np.array(data)[:, 2:].astype(float).dot(0.001)
+        la_en = LabelEncoder()
+        la_en.fit_transform([])
         print(boo)
+        number = self.countKeyByParticipantName(usrname)
         for participant_data in data:
             participant = ParticipantKey(
                 session='1',
@@ -91,14 +96,34 @@ class ParticipantResource(Resource):
                 UD_key1_key2=participant_data[5]/1000,
                 UU_key1_key2=participant_data[6]/1000
             )
-            participants.append(participant)
-
-        db.session.add_all(participants)
-        db.session.commit()
-        return [participant.to_dict() for participant in participants], 201
+            sendedKeys.append(participant)
+        
+        if(number <=1000):
+            db.session.add_all(sendedKeys)
+            db.session.commit()
+            return [participant.to_dict() for participant in sendedKeys], 201
+        else:
+            newdata = [element.getTable() for element in sendedKeys]
+            oldKeys = self.getAllKeyByParticipantName(usrname)
+            dataset = [element.getTable() for element in oldKeys]
+            boo = test_user(np.array(dataset), np.array(newdata))
+            print('je suis la')
+            return boo
+        
 
     def get(self):
         """Récupère les données de participant pour une session donnée"""
         session = request.args.get('session')
         participants = ParticipantKey.query.all()
         return [participant.to_dict() for participant in participants]
+    
+    
+    def countKeyByParticipantName(self, participant_name):
+        """Compte le nombre de participants portant un nom donné"""
+        participants = ParticipantKey.query.filter_by(participant=participant_name).all()
+        return len(participants)
+    
+    def getAllKeyByParticipantName(self, participant_name):
+        """Compte le nombre de participants portant un nom donné"""
+        key = ParticipantKey.query.filter_by(participant=participant_name).all()
+        return key

@@ -55,3 +55,6 @@ class ParticipantKey(db.Model):
             'UD_key1_key2': self.UD_key1_key2,
             'UU_key1_key2': self.UU_key1_key2
         }
+    
+    def getTable(self):
+        return [self.DU_key1_key1, self.DD_key1_key2, self.DU_key1_key2, self.UD_key1_key2, self.UU_key1_key2]
