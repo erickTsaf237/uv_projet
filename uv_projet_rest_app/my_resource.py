@@ -11,7 +11,8 @@ from my_model import db, Application, ParticipantKey
 from flask import request
 from flask_restful import Resource
 from sklearn.preprocessing import LabelEncoder
-from my_isolation_forest import test_user
+from model.my_isolation_forest import test_user
+from model.my_local_oulier_factor import user_local_outlier_factor_test
 
 class ApplicationResource(Resource):
     def __init__(self):
@@ -78,12 +79,15 @@ class ParticipantResource(Resource):
         data = key['data']
         usrname = key['userName']
         sendedKeys = []
-        
+        if len(data)<5:
+            return {'succes': data}
+        print(data)
         boo = np.array(data)[:, 2:].astype(float).dot(0.001)
         la_en = LabelEncoder()
         la_en.fit_transform([])
         print(boo)
         number = self.countKeyByParticipantName(usrname)
+        print(number)
         for participant_data in data:
             participant = ParticipantKey(
                 session='1',
@@ -98,7 +102,7 @@ class ParticipantResource(Resource):
             )
             sendedKeys.append(participant)
         
-        if(number <=1000):
+        if(number <=300):
             db.session.add_all(sendedKeys)
             db.session.commit()
             return [participant.to_dict() for participant in sendedKeys], 201
@@ -106,9 +110,13 @@ class ParticipantResource(Resource):
             newdata = [element.getTable() for element in sendedKeys]
             oldKeys = self.getAllKeyByParticipantName(usrname)
             dataset = [element.getTable() for element in oldKeys]
-            boo = test_user(np.array(dataset), np.array(newdata))
+            X_train = np.array(dataset).astype(float)
+            X_test = np.array(newdata)
+            boo = test_user(X_train, X_test)
+            print(X_train.shape, X_test.shape)
+            y_predict_lof, lof = user_local_outlier_factor_test(X_train, X_test)
             print('je suis la')
-            return boo
+            return f'{y_predict_lof}, {y_predict_lof.sum()}', 200
         
 
     def get(self):

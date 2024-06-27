@@ -36,11 +36,11 @@ class ParticipantKey(db.Model):
     session = db.Column(db.String(100), nullable=False)
     key1 = db.Column(db.String(100), nullable=False)
     key2 = db.Column(db.String(100), nullable=False)
-    DU_key1_key1 = db.Column(db.String(100), nullable=False)
-    DD_key1_key2 = db.Column(db.String(100), nullable=False)
-    DU_key1_key2 = db.Column(db.String(100), nullable=False)
-    UD_key1_key2 = db.Column(db.String(100), nullable=False)
-    UU_key1_key2 = db.Column(db.String(100), nullable=False)
+    DU_key1_key1 = db.Column(db.Float, nullable=False)
+    DD_key1_key2 = db.Column(db.Float, nullable=False)
+    DU_key1_key2 = db.Column(db.Float, nullable=False)
+    UD_key1_key2 = db.Column(db.Float, nullable=False)
+    UU_key1_key2 = db.Column(db.Float, nullable=False)
 
     def to_dict(self):
         return {

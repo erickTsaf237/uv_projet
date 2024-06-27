@@ -20,6 +20,9 @@ def test_user(train_X, test_X):
         int: Somme des prédictions du modèle sur le jeu de test.
     """
     # Vérification du type des entrées
+    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+    print(train_X)
+    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     if not isinstance(train_X, np.ndarray) or not isinstance(test_X, np.ndarray):
         raise TypeError("train_X et test_X doivent être des tableaux numpy.")
     
